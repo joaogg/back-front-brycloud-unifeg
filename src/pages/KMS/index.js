@@ -123,13 +123,16 @@ export default function KMS() {
             />
 
             <label htmlFor="uuid">UUID do certificado:</label>
-            <input
-              type="string"
+            <select
               id="uuid"
-              placeholder="UUID"
               value={uuid}
-              onChange={event => setUuid(event.target.value)}              
-            />
+              required
+              onChange={event => setUuid(event.target.value)} 
+            >
+              <option value="">Selecionar um UUID</option>
+              <option value="d9e8b69c-0f8a-477e-abd8-68eacdfd9102">BryCloud UUID</option>
+            </select>
+
             <button className="btn" type="submit">
               Assinar
             </button>
