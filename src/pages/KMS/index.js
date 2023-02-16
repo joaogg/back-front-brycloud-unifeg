@@ -8,6 +8,7 @@ export default function KMS() {
   const [tipoAssinante, setTipoAssinante] = useState("Representantes");
   const [tipoDocumento, setTipoDocumento] = useState("XMLDiplomado")
   const [signerCPF, setSignerCPF] = useState("");
+  const [passwordPin, setPasswordPin] = useState("");
   const [uuid, setUuid] = useState("");
   const [loadingAssinatura, setLoadingAssinatura] = useState(false);
 
@@ -27,13 +28,14 @@ export default function KMS() {
     data.append('documento', documento);
     data.append('tipoAssinatura', tipoAssinante)
     data.append('signerKMS', signerCPF);
+    data.append('passwordPin', passwordPin);
     data.append('uuid', uuid);
 
     try {
       // REALIZA REQUISIÇÃO PARA O BACKEND
       const response = await axios.post(`http://localhost:3333/${tipoDocumento}/assinaKms`, data);
       console.log("response", response);
-      if(response.data.message) {
+      if (response.data.message) {
         alert(response.data.message)
       } else {
         // REALIZA O DOWNLOAD DO DIPLOMA ASSINADO
@@ -63,11 +65,11 @@ export default function KMS() {
               {documento ? (
                 <React.Fragment>{documento.name}</React.Fragment>
               ) : (
-                  <React.Fragment>
-                    <i className="fa fa-upload"></i>
+                <React.Fragment>
+                  <i className="fa fa-upload"></i>
                   Selecione o arquivo
-                  </React.Fragment>
-                )}
+                </React.Fragment>
+              )}
               <input
                 id="documento"
                 type="file"
@@ -82,7 +84,7 @@ export default function KMS() {
               id="tipoDocumento"
               value={tipoDocumento}
               required
-              onChange={event => { setTipoAssinante("Representantes") ; setTipoDocumento(event.target.value)}}
+              onChange={event => { setTipoAssinante("Representantes"); setTipoDocumento(event.target.value) }}
             >
               <option value="XMLDiplomado">XML Diplomado</option>
               <option value="XMLDocumentacaoAcademica">XML Documentação Acadêmica</option>
@@ -98,17 +100,17 @@ export default function KMS() {
               onChange={event => setTipoAssinante(event.target.value)}
             >
               <option value="Representantes">Representantes:</option>
-              {tipoDocumento === "XMLDiplomado" ? 
+              {tipoDocumento === "XMLDiplomado" ?
                 (
                   <>
-                    <option value="IESRegistradora">IES Registradora</option>            
-                  </> 
-                ) : 
+                    <option value="IESRegistradora">IES Registradora</option>
+                  </>
+                ) :
                 (
                   <>
-                    <option value="IESEmissoraDadosDiploma">IES Emissora em Dados Diploma</option>   
-                    <option value="IESEmissoraRegistro">IES Emissora para registro</option>           
-                  </> 
+                    <option value="IESEmissoraDadosDiploma">IES Emissora em Dados Diploma</option>
+                    <option value="IESEmissoraRegistro">IES Emissora para registro</option>
+                  </>
                 )
               }
             </select>
@@ -122,12 +124,21 @@ export default function KMS() {
               onChange={event => setSignerCPF(event.target.value)}
             />
 
+            <label htmlFor="signerCPF">Senha PIN:</label>
+            <input
+              type="text"
+              id="Senha PIN"
+              placeholder="Senha PIN"
+              value={passwordPin}
+              onChange={event => setPasswordPin(event.target.value)}
+            />
+
             <label htmlFor="uuid">UUID do certificado:</label>
             <select
               id="uuid"
               value={uuid}
               required
-              onChange={event => setUuid(event.target.value)} 
+              onChange={event => setUuid(event.target.value)}
             >
               <option value="">Selecionar um UUID</option>
               <option value="d9e8b69c-0f8a-477e-abd8-68eacdfd9102">BryCloud UUID</option>
@@ -138,7 +149,7 @@ export default function KMS() {
             </button>
 
             <div>{loadingAssinatura ? "Realizando a assinatura do documento..." : ""}</div>
-          </form>        
+          </form>
         </div>
       </div>
     </>
