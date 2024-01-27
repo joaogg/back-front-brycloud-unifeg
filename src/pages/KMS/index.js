@@ -31,10 +31,10 @@ export default function KMS() {
     data.append('passwordPin', passwordPin);
     data.append('uuid', uuid);
 
+    // REALIZA REQUISIÇÃO PARA O BACKEND
+    const response = await axios.post(`http://localhost:3333/${tipoDocumento}/assinaKms`, data);
+
     try {
-      // REALIZA REQUISIÇÃO PARA O BACKEND
-      const response = await axios.post(`http://localhost:3333/${tipoDocumento}/assinaKms`, data);
-      console.log("response", response);
       if (response.data.message) {
         alert(response.data.message)
       } else {
@@ -141,7 +141,7 @@ export default function KMS() {
               onChange={event => setUuid(event.target.value)}
             >
               <option value="">Selecionar um UUID</option>
-              <option value="d9e8b69c-0f8a-477e-abd8-68eacdfd9102">BryCloud UUID</option>
+              <option value="d9e8b69c-0f8a-477e-abd8-68eacdfd9102">BryCloud Homologação UUID (d9e8b69c-0f8a-477e-abd8-68eacdfd9102)</option>
             </select>
 
             <button className="btn" type="submit">
